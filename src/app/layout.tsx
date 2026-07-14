@@ -1,3 +1,5 @@
+import AuthProvider from "@/components/session-provider";
+
 export const metadata = {
   title: "Employee Management System",
   description: "Employee Management System",
@@ -5,12 +7,12 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }
