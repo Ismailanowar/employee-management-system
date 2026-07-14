@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import DeleteEmployeeButton from "@/components/DeleteEmployeeButton";
 
 export default async function EmployeesPage() {
   const employees = await prisma.employee.findMany({
@@ -23,28 +24,40 @@ export default async function EmployeesPage() {
       ) : (
         <table className="w-full border bg-white">
           <thead>
-            <tr className="bg-gray-100">
-              <th className="border p-3">Name</th>
-              <th className="border p-3">Email</th>
-              <th className="border p-3">Department</th>
-              <th className="border p-3">Designation</th>
-            </tr>
-          </thead>
+  <tr className="bg-gray-100">
+    <th className="border p-3">Name</th>
+    <th className="border p-3">Email</th>
+    <th className="border p-3">Department</th>
+    <th className="border p-3">Designation</th>
+    <th className="border p-3">Action</th>
+  </tr>
+</thead>
 
-          <tbody>
-            {employees.map((employee) => (
-              <tr key={employee.id}>
-                <td className="border p-3">{employee.name}</td>
-                <td className="border p-3">{employee.email}</td>
-                <td className="border p-3">
-                  {employee.department.name}
-                </td>
-                <td className="border p-3">
-                  {employee.designation}
-                </td>
-              </tr>
-            ))}
-          </tbody>
+<tbody>
+  {employees.map((employee) => (
+    <tr key={employee.id}>
+      <td className="border p-3">{employee.name}</td>
+      <td className="border p-3">{employee.email}</td>
+      <td className="border p-3">
+        {employee.department.name}
+      </td>
+      <td className="border p-3">
+        {employee.designation}
+      </td>
+
+      <td className="border p-3">
+        <a
+          href={`/dashboard/employees/${employee.id}/edit`}
+          className="text-blue-600 hover:underline mr-3"
+        >
+          Edit
+        </a>
+
+        <DeleteEmployeeButton id={employee.id} />
+      </td>
+    </tr>
+  ))}
+</tbody>
         </table>
       )}
     </div>

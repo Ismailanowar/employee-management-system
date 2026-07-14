@@ -44,3 +44,52 @@ export async function createEmployee(data: {
     message: "Employee added successfully.",
   };
 }
+
+export async function updateEmployee(
+  id: string,
+  data: {
+    name: string;
+    email: string;
+    phone: string;
+    designation: string;
+    salary: number;
+    joiningDate: string;
+    departmentId: string;
+  }
+) {
+  await prisma.employee.update({
+    where: {
+      id,
+    },
+    data: {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      designation: data.designation,
+      salary: data.salary,
+      joiningDate: new Date(data.joiningDate),
+      departmentId: data.departmentId,
+    },
+  });
+
+  revalidatePath("/dashboard/employees");
+
+  return {
+    success: true,
+    message: "Employee updated successfully.",
+  };
+}
+
+export async function deleteEmployee(id: string) {
+  await prisma.employee.delete({
+    where: {
+      id,
+    },
+  });
+
+  revalidatePath("/dashboard/employees");
+
+  return {
+    success: true,
+  };
+}
