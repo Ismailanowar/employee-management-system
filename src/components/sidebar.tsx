@@ -37,3 +37,10 @@ export default function Sidebar() {
     </aside>
   );
 }
+
+<Link
+  href="/dashboard/employees/new"
+  className="block rounded p-2 hover:bg-slate-700"
+>
+  Add Employee
+</Link>
